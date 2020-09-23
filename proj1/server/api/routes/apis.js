@@ -99,49 +99,7 @@ router.put("/signup", (req, res, next) => {
               });
           }
         });
-
-        //user hast vali confirmed nist
       }
-      // else if (existedUser && !existedUser.confirmed) {
-      //   const confirmationToken = jwt.sign(
-      //     {
-      //       email: u.email,
-      //       userId: u._id,
-      //       role: u.role,
-      //       first_name: u.first_name,
-      //       last_name: u.last_name,
-      //     },
-      //     JWT_KEY,
-      //     {
-      //       expiresIn: "1h",
-      //     }
-      //   );
-      //   transporter
-      //     .sendMail(
-      //       sendEmail(
-      //         req.body.email,
-      //         "تایید ایمیل سایت ترجمه",
-      //         confirmationToken
-      //       )
-      //     )
-      //     .then((resolve) => {
-      //       return res.status(202).json({
-      //         message: "sent email successfully",
-      //         status: 202,
-      //         answer: {
-      //           resolve,
-      //           user: u,
-      //         },
-      //       });
-      //     })
-      //     .catch((err) => {
-      //       console.log("error in send email");
-      //       return res.status(500).json({
-      //         error: err,
-      //         status: 500,
-      //       });
-      //     });
-      // }
 
       // We have already seen this email address.
       else if (existedUser) {
