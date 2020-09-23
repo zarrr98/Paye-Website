@@ -1,4 +1,4 @@
-const {SERVER_URL} = require("../utils/configs")
+const {SERVER_URL} = require("../utils/publicConfigs")
 
 const sendEmail = (to, subject, token) => {
   const url = `${SERVER_URL.protocol}://${SERVER_URL.baseURL}:${SERVER_URL.port}/${SERVER_URL.path}/confirmation/${token}`;

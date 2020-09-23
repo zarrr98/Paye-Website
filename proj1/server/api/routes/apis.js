@@ -12,7 +12,7 @@ const transporter = require("../../email/send");
 const sendEmail = require("../../email/templates");
 const { upload } = require("../middleware/upload-file");
 const { JWT_KEY } = require("../../utils/configs");
-const { SERVER_URL } = require("../../utils/configs");
+const { Client_URL } = require("../../utils/publicConfigs");
 
 // const {SMS_API_KEY} = require("../../utils/configs")
 
@@ -130,7 +130,7 @@ router.get("/confirmation/:token", confirmEmailToken, (req, res, next) => {
     .then((resolve) => {
       console.log("got updated successfully");
       res.redirect(
-        `${SERVER_URL.protocol}://${SERVER_URL.baseURL}:${SERVER_URL.port}/login`
+        `${Client_URL.protocol}://${Client_URL.baseURL}:${Client_URL.port}/login`
       );
       // res.redirect("http://localhost:3000/login");
     })
