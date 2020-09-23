@@ -4,6 +4,7 @@ import "./assets/css/style.css";
 import { FetchData, PutData } from "./utils/services";
 import { URL } from "./utils/configs";
 import SignupPage from './js/screens/SignupPage'
+import LoginPage from './js/screens/LoginPage';
 import {BrowserRouter as Router , Route , Switch} from 'react-router-dom'
 
 class App extends React.Component {
@@ -21,6 +22,9 @@ class App extends React.Component {
           </Route>
           <Route path={"/signup"}>
             <SignupPage/>
+          </Route>
+          <Route path={"/login"}>
+            <LoginPage/>
           </Route>
         </Switch>
       </Router>
