@@ -6,6 +6,7 @@ import { URL } from "./utils/configs";
 import SignupPage from "./js/screens/SignupPage";
 import LoginPage from "./js/screens/LoginPage";
 import AlertPage from "./js/screens/AlertPage";
+import MainPage from './js/screens/MainPage';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 class App extends React.Component {
@@ -16,7 +17,7 @@ class App extends React.Component {
       <Router>
         <Switch>
           <Route path={"/"} exact>
-            <h2>main page or sth </h2>
+            <MainPage/>
           </Route>
           <Route path={"/signup"}>
             <SignupPage />
