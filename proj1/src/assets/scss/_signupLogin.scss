@@ -1,0 +1,31 @@
+
+.centered-container{
+    
+    @include centerElementContainer;
+    padding: 4vh 0;
+}
+.form-container{
+    text-align: right;
+    border: 1px solid $formBorder;
+    box-shadow: 2px 3px 10px $cardShadow;
+    width : 40vw;
+    // @include centerElement(40vw);
+
+    .title {
+        text-align: center;
+        background-color: $greyForForms;
+        padding: 12px;
+        border-bottom: 1px solid $formBorder
+    }
+    input {
+        background-color: $greyForForms;
+    }
+    
+}
+
+
+@media screen and (max-width : 768px){
+    .form-container{
+        width: 100vh;
+    }
+}
