@@ -11,6 +11,7 @@
     background-color: $topnavBgColor;
     margin-right: $sidebarWidth;
     padding-right: 2%;
+    transition: margin-right $sidebarToggleTime linear;
 
     ul {
       display: flex;
@@ -35,10 +36,14 @@
   .sidebar {
     height: 100vh;
     background-color: $sidebarBgColor;
-    
-    position: absolute;
+    opacity: 0.9;
+    position: fixed;
+    z-index: 1;
+    overflow-x: hidden;
     top: 0;
     right: 0;
+    transition: width $sidebarToggleTime linear;
+    width: $sidebarWidth;
     ul {
       display: flex;
       flex-direction: column;
@@ -50,15 +55,15 @@
       color: $sidebarLinkColor;
       text-decoration: none;
       &:hover {
-          color: $sidebarLinkHover;
+        color: $sidebarLinkHover;
       }
     }
   }
-  .sidebar-show {
-    width: $sidebarWidth;
-  }
-  .sidebar-hide {
-    width : 0;
-    display : none;
-  }
 }
+
+.main-content {
+  margin-right: $sidebarWidth;
+  transition: margin-right $sidebarToggleTime linear;
+  text-align: right;
+}
+

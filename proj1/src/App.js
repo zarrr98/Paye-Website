@@ -6,7 +6,7 @@ import { URL } from "./utils/configs";
 import SignupPage from "./js/screens/SignupPage";
 import LoginPage from "./js/screens/LoginPage";
 import AlertPage from "./js/screens/AlertPage";
-import MainPage from './js/screens/MainPage';
+import NavigationSystem from './js/components/NavigationSystem';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 class App extends React.Component {
@@ -17,7 +17,7 @@ class App extends React.Component {
       <Router>
         <Switch>
           <Route path={"/"} exact>
-            <MainPage/>
+            <NavigationSystem/>
           </Route>
           <Route path={"/signup"}>
             <SignupPage />

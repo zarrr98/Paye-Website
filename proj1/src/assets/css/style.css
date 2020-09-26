@@ -10847,7 +10847,7 @@ a.text-dark:hover, a.text-dark:focus {
 
 @media screen and (max-width: 768px) {
   .form-container {
-    width: 100vh;
+    width: 100vw;
   }
 }
 
@@ -10870,6 +10870,8 @@ a.text-dark:hover, a.text-dark:focus {
   background-color: #e6cdcd;
   margin-right: 25vw;
   padding-right: 2%;
+  -webkit-transition: margin-right 0.3s linear;
+  transition: margin-right 0.3s linear;
 }
 
 .navigation .top-navbar ul {
@@ -10902,9 +10904,15 @@ a.text-dark:hover, a.text-dark:focus {
 .navigation .sidebar {
   height: 100vh;
   background-color: #2c2828;
-  position: absolute;
+  opacity: 0.9;
+  position: fixed;
+  z-index: 1;
+  overflow-x: hidden;
   top: 0;
   right: 0;
+  -webkit-transition: width 0.3s linear;
+  transition: width 0.3s linear;
+  width: 25vw;
 }
 
 .navigation .sidebar ul {
@@ -10933,13 +10941,11 @@ a.text-dark:hover, a.text-dark:focus {
   color: #fff;
 }
 
-.navigation .sidebar-show {
-  width: 25vw;
-}
-
-.navigation .sidebar-hide {
-  width: 0;
-  display: none;
+.main-content {
+  margin-right: 25vw;
+  -webkit-transition: margin-right 0.3s linear;
+  transition: margin-right 0.3s linear;
+  text-align: right;
 }
 
 body {
