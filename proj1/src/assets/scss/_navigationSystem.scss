@@ -1,5 +1,6 @@
 .navigation {
   position: relative;
+  text-align: right;
   ul {
     list-style: none;
   }
@@ -52,11 +53,45 @@
     }
     a {
       padding-right: 5%;
+      padding-top: 5px;
       color: $sidebarLinkColor;
       text-decoration: none;
       &:hover {
         color: $sidebarLinkHover;
       }
+    }
+    .dropdown-btn {
+      width: 100%;
+    }
+    .active-dropdown-button {
+      background-color: $topnavBgColor;
+      color: black;
+    }
+    .dropdown-container {
+      padding-right: 5%;
+     max-height: 0;
+     transform: scaleY(0);    
+     transform-origin: top;
+
+      overflow-y: hidden;
+      background-color: $sidebarDropdownBgColor;
+      color: red;
+      width: 100%;
+      transition: all 0.3s linear;
+
+      a {
+        padding: 0;
+        margin: 0;
+        color: black;
+        &:hover {
+          color: $sidebarLinkHover;
+        }
+      }
+      
+    }
+    .open-dropdown {
+     max-height: 500px;
+     transform: scaleY(1);
     }
   }
 }
@@ -66,4 +101,3 @@
   transition: margin-right $sidebarToggleTime linear;
   text-align: right;
 }
-

@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { withRouter, Link } from "react-router-dom";
-import { FaBars } from "react-icons/fa";
+import { FaBars, FaAngleDown, FaAngleUp } from "react-icons/fa";
 
 class NavigationSystem extends React.Component {
   sidebarWidth_lg = "25vw";
@@ -31,7 +31,6 @@ class NavigationSystem extends React.Component {
     let topNavbar = this.topNavbar;
     let mainContent = this.mainContent;
     if (sidebar && topNavbar && mainContent) {
-
       //set the width of opened sidebar based on media query
       let smallScreen = window.matchMedia(this.SidebarChangeMediaQuery).matches;
       let sidebarWidth = smallScreen
@@ -80,6 +79,15 @@ class NavigationSystem extends React.Component {
     }
   };
 
+  toggleDropdown = (event) => {
+    let element = event.target;
+    let dropdownContainer = element.nextElementSibling;
+    if (dropdownContainer) {
+      element.classList.toggle("active-dropdown-button");
+      dropdownContainer.classList.toggle("open-dropdown");
+    }
+  };
+
   componentDidMount = () => {
     this.initMediaQueryListener();
   };
@@ -114,10 +122,35 @@ class NavigationSystem extends React.Component {
                 <li>Home</li>
               </Link>
               <Link to="/">
-                <li>Home</li>
+                <li>Contact</li>
               </Link>
               <Link to="/">
-                <li>Home</li>
+                <li>About</li>
+              </Link>
+              <Link
+                to="/"
+                className="dropdown-btn"
+                onClick={this.toggleDropdown}
+              >
+                Dropdown
+                <FaAngleDown />
+              </Link>
+              <div className="dropdown-container">
+                <Link to="/">
+                  <li>Dropdown1</li>
+                </Link>
+                <Link to="/">
+                  <li>Dropdown2</li>
+                </Link>
+                <Link to="/">
+                  <li>Dropdown3</li>
+                </Link>
+              </div>
+              <Link to="/">
+                <li>About2</li>
+              </Link>
+              <Link to="/">
+                <li>About</li>
               </Link>
             </ul>
           </div>
