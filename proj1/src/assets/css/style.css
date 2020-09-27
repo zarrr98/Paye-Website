@@ -10961,7 +10961,6 @@ a.text-dark:hover, a.text-dark:focus {
           transform-origin: top;
   overflow-y: hidden;
   background-color: #686464;
-  color: red;
   width: 100%;
   -webkit-transition: all 0.3s linear;
   transition: all 0.3s linear;

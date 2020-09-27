@@ -11,6 +11,7 @@
     min-height: 10vh;
     background-color: $topnavBgColor;
     margin-right: $sidebarWidth;
+    //float: right;
     padding-right: 2%;
     transition: margin-right $sidebarToggleTime linear;
 
@@ -69,13 +70,13 @@
     }
     .dropdown-container {
       padding-right: 5%;
-     max-height: 0;
-     transform: scaleY(0);    
-     transform-origin: top;
+      max-height: 0;
+      transform: scaleY(0);
+      transform-origin: top;
 
       overflow-y: hidden;
       background-color: $sidebarDropdownBgColor;
-      color: red;
+      // color: red;
       width: 100%;
       transition: all 0.3s linear;
 
@@ -87,11 +88,10 @@
           color: $sidebarLinkHover;
         }
       }
-      
     }
     .open-dropdown {
-     max-height: 500px;
-     transform: scaleY(1);
+      max-height: 500px;
+      transform: scaleY(1);
     }
   }
 }

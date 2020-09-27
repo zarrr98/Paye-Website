@@ -11,7 +11,6 @@ class LoginPage extends React.Component {
     errorMessage: "",
   };
   fields = [
-   
     {
       type: "text",
       formType: "email",
@@ -44,9 +43,14 @@ class LoginPage extends React.Component {
         errorMessage: Strings.form.connectionError,
       });
     } else if (response.status === 200) {
-      console.log("logged in successfully");
+      console.log("logged in successfully, response :", response.resolve);
+      this.props.setProfile(response.resolve);
+      this.props.history.push({
+        pathname: "/dashboard",
+        
+      });
       //inja badan piade sazi mishe va varede account mishe.
-    }else if (response.status === 201){
+    } else if (response.status === 201) {
       this.props.history.push({
         pathname: "/alert",
         state: {
@@ -54,9 +58,7 @@ class LoginPage extends React.Component {
           text: Strings.alerts.loginUserNotConfirmed,
         },
       });
-    }
-    
-    else if (response.status === 403) {
+    } else if (response.status === 403) {
       this.setState({ errorMessage: Strings.login.wrongUserOrPassError });
     } else if (response.status === 500) {
       this.setState({ errorMessage: Strings.form.connectionError });
@@ -65,10 +67,9 @@ class LoginPage extends React.Component {
     }
   };
   submitMethod = async (values) => {
-      console.log("values in submit method : ", values)
+    console.log("values in submit method : ", values);
     const data = await FetchData(
-      `${URL.protocol}://${URL.baseURL}:${URL.port}/${URL.path}/login/${values.email}/${values.password}`,
-    
+      `${URL.protocol}://${URL.baseURL}:${URL.port}/${URL.path}/login/${values.email}/${values.password}`
     );
     this.checkResponseStatus(data);
   };
@@ -76,16 +77,14 @@ class LoginPage extends React.Component {
     return (
       <div className="centered-container">
         <Card className="form-container">
-          <Card.Title className="title">
-            {Strings.login.loginTitle}
-          </Card.Title>
+          <Card.Title className="title">{Strings.login.loginTitle}</Card.Title>
           <Card.Body>
             <FormComponent
               errorMessage={this.state.errorMessage}
               setErrorMessage={this.setErrorMessage}
               fields={this.fields}
               submitMethod={this.submitMethod}
-              submitButtonText = {Strings.form.login}
+              submitButtonText={Strings.form.login}
             />
             <p className="margin-top text-center">
               <p className="text-danger">{this.state.errorMessage}</p>

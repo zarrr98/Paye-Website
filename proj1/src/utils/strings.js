@@ -1,3 +1,5 @@
+import { createEvent } from "@testing-library/react";
+
 const Strings = {
   form: {
     invalidEmailError: "ایمیل نامعتبر است",
@@ -33,6 +35,37 @@ const Strings = {
          چنانچه پیام در آنجا نبود حتما پوشه spam خود را نیز چک فرمایید.`,
     loginUserNotConfirmed: `حساب کاربری شما با این آدرس ایمیل موجود است. اما لازم است قبل از ورود به حسابتان، آدرس ایمیل خود را تایید کنید.
          یک ایمیل حاوی لینک فعالسازی برای شما فرستاده شد، لطفا صندوق پیام خود را چک کنید، چنانچه پیام در آنجا نبود حتما پوشه spam خود را نیز چک فرمایید.`,
+  },
+  storage: {
+    profile: "profile",
+  },
+  navigationItems: {
+    title: {
+      mainPage: "صفحه اصلی",
+      loginSignup: "ورود/ثبت نام",
+      about: "درباره پایه",
+      help: "راهنما",
+      profile: "پروفایل",
+      dashboard: "داشبورد",
+      myEvents: "ایونت های من",
+      createEvent: 'ایجاد ایونت',
+      currentEvents: "ایونت های جاری",
+      completedEvents: 'ایونت های به پایان رسیده',
+      othersEvents: 'ایونت های سایرین',
+    },
+    path: {
+      mainPage: "/mainpage",
+      loginSignup: "/login",
+      about: "/about",
+      help: "/help",
+      profile: "/profile",
+      dashboard: "/dashboard",
+      myEvents : '/',
+      createEvent: '/createEvent',
+      currentEvents: '/currentEvents',
+      completedEvents: '/completedEvents',
+      othersEvents: '/events',
+    },
   },
 };
 

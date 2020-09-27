@@ -2,8 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { withRouter, Link } from "react-router-dom";
 import { FaBars, FaAngleDown, FaAngleUp } from "react-icons/fa";
+import { NavigationItems, StrorageGetItem } from "../../utils/configs";
+import { Strings } from "../../utils/strings";
 
 class NavigationSystem extends React.Component {
+  state = {};
   sidebarWidth_lg = "25vw";
   sidebarWidth_sm = "70vw";
   SidebarChangeMediaQuery = "(max-width: 768px)";
@@ -64,6 +67,7 @@ class NavigationSystem extends React.Component {
   };
   setNavWhenResize = (mq) => {
     console.log("You RESIZED :D , is it small now ? ", mq.matches);
+    this.setState({ smallScreen: mq.matches });
     let sidebar = this.sidebar;
     let topNavbar = this.topNavbar;
     let mainContent = this.mainContent;
@@ -88,10 +92,28 @@ class NavigationSystem extends React.Component {
     }
   };
 
+  setMarginRightBasedOnProfile = () => {
+    let profile = StrorageGetItem(Strings.storage.profile);
+    if (!profile && !this.state.smallScreen) {
+      let topNavbar = this.topNavbar;
+      let mainContent = this.mainContent;
+      if (topNavbar && mainContent) {
+        topNavbar.style.marginRight = "0";
+        mainContent.style.marginRight = "0";
+      }
+    }
+  };
   componentDidMount = () => {
     this.initMediaQueryListener();
+    this.setMarginRightBasedOnProfile();
   };
   render() {
+    let profile = StrorageGetItem(Strings.storage.profile, true);
+    let topNavbarItems = profile
+      ? NavigationItems.topNavbar.loggedIn
+      : NavigationItems.topNavbar.notLoggedIn;
+    let sidebarItems = profile ? NavigationItems.sidebar.loggedIn : [];
+    localStorage.removeItem(Strings.storage.profile);
     return (
       <div>
         <div className="navigation">
@@ -100,11 +122,20 @@ class NavigationSystem extends React.Component {
             ref={(element) => (this.topNavbar = element)}
           >
             <ul>
-              <li>
-                <FaBars onClick={this.toggleSidebar} />
-              </li>
-
-              <Link to="/">
+              {profile || this.state.smallScreen ? (
+                <li>
+                  <FaBars onClick={this.toggleSidebar} />
+                </li>
+              ) : null}
+              {topNavbarItems.map((item) => {
+                return !item.moveToSidebarInSmallScreen ||
+                  !this.state.smallScreen ? (
+                  <Link to={item.path} style={item.style}>
+                    <li>{item.title}</li>
+                  </Link>
+                ) : null;
+              })}
+              {/* <Link to="/">
                 <li>Home</li>
               </Link>
               <Link to="/">
@@ -112,64 +143,64 @@ class NavigationSystem extends React.Component {
               </Link>
               <Link to="/">
                 <li>Home</li>
-              </Link>
+              </Link> */}
             </ul>
           </nav>
 
-          <div className="sidebar" ref={(element) => (this.sidebar = element)}>
-            <ul>
-              <Link to="/">
-                <li>Home</li>
-              </Link>
-              <Link to="/">
-                <li>Contact</li>
-              </Link>
-              <Link to="/">
-                <li>About</li>
-              </Link>
-              <Link
-                to="/"
-                className="dropdown-btn"
-                onClick={this.toggleDropdown}
-              >
-                Dropdown
-                <FaAngleDown />
-              </Link>
-              <div className="dropdown-container">
+          {profile || this.state.smallScreen ? (
+            <div
+              className="sidebar"
+              ref={(element) => (this.sidebar = element)}
+            >
+              <ul>
+                {[...topNavbarItems , ...sidebarItems].map(item => {
+                  
+                })}
                 <Link to="/">
-                  <li>Dropdown1</li>
+                  <li>Home</li>
                 </Link>
                 <Link to="/">
-                  <li>Dropdown2</li>
+                  <li>Contact</li>
                 </Link>
                 <Link to="/">
-                  <li>Dropdown3</li>
+                  <li>About</li>
                 </Link>
-              </div>
-              <Link to="/">
-                <li>About2</li>
-              </Link>
-              <Link to="/">
-                <li>About</li>
-              </Link>
-            </ul>
-          </div>
+                <Link
+                  to="/"
+                  className="dropdown-btn"
+                  onClick={this.toggleDropdown}
+                >
+                  Dropdown
+                  <FaAngleDown />
+                </Link>
+                <div className="dropdown-container">
+                  <Link to="/">
+                    <li>Dropdown1</li>
+                  </Link>
+                  <Link to="/">
+                    <li>Dropdown2</li>
+                  </Link>
+                  <Link to="/">
+                    <li>Dropdown3</li>
+                  </Link>
+                </div>
+                <Link to="/">
+                  <li>About2</li>
+                </Link>
+                <Link to="/">
+                  <li>About</li>
+                </Link>
+              </ul>
+            </div>
+          ) : null}
         </div>
 
         <div
           className="main-content"
           ref={(element) => (this.mainContent = element)}
-          onClick={this.closeSidebar}
+          onClick={this.state.smallScreen ? this.closeSidebar : null}
         >
-          this is me trying!! :) uld avoid using the solution like since it
-          overrides the window.onresize event handler function. You should
-          better assign a new event handler to the resize event using event
-          listener, as shown in the example above. Please check out the tutorial
-          on JavaScript event listeners to learn more about it. Related FAQ Here
-          are some more FAQ related to this topic: How to call multiple
-          JavaScript functions in a single onclick event How to bind click event
-          to dynamically added HTML elements in jQuery How to stop firing event
-          until an effect is finished in jQuery
+          {this.props.children}
         </div>
       </div>
     );
