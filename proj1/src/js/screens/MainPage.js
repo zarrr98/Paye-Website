@@ -1,10 +1,11 @@
 import React from "react";
+import { Strings } from "../../utils/strings";
 import NavigationSystem from "../components/NavigationSystem";
 
 export default class MainPage extends React.Component {
   render() {
     return (
-      <NavigationSystem>
+      <NavigationSystem selectedTab = {Strings.navigationItems.title.mainPage}>
         <div>main page
         What did you think I'd say to that?
 Does a scorpion sting when fighting back?

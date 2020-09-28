@@ -103,17 +103,29 @@ class NavigationSystem extends React.Component {
       }
     }
   };
+  setSidebarItems = (topNavbarItems, sidebarItems = []) => {
+    let { smallScreen } = this.state;
+    let smallScreenItemsInTopNav = topNavbarItems.filter(
+      (item) => item.moveToSidebarInSmallScreen
+    );
+    return smallScreen
+      ? [...smallScreenItemsInTopNav, ...sidebarItems]
+      : sidebarItems;
+  };
   componentDidMount = () => {
     this.initMediaQueryListener();
     this.setMarginRightBasedOnProfile();
   };
   render() {
+    const { selectedTab } = this.props;
     let profile = StrorageGetItem(Strings.storage.profile, true);
     let topNavbarItems = profile
       ? NavigationItems.topNavbar.loggedIn
       : NavigationItems.topNavbar.notLoggedIn;
-    let sidebarItems = profile ? NavigationItems.sidebar.loggedIn : [];
-    localStorage.removeItem(Strings.storage.profile);
+    let sidebarItems = profile
+      ? NavigationItems.sidebar.loggedIn
+      : this.setSidebarItems(topNavbarItems);
+    //localStorage.removeItem(Strings.storage.profile);
     return (
       <div>
         <div className="navigation">
@@ -135,15 +147,6 @@ class NavigationSystem extends React.Component {
                   </Link>
                 ) : null;
               })}
-              {/* <Link to="/">
-                <li>Home</li>
-              </Link>
-              <Link to="/">
-                <li>Home</li>
-              </Link>
-              <Link to="/">
-                <li>Home</li>
-              </Link> */}
             </ul>
           </nav>
 
@@ -153,43 +156,35 @@ class NavigationSystem extends React.Component {
               ref={(element) => (this.sidebar = element)}
             >
               <ul>
-                {[...topNavbarItems , ...sidebarItems].map(item => {
-                  
+                {sidebarItems.map((item) => {
+                  return item.dropDownOptions ? (
+                    <React.Fragment>
+                      <Link
+                        className="dropdown-btn"
+                        onClick={this.toggleDropdown}
+                      >
+                        {item.title}
+                        <FaAngleDown />
+                      </Link>
+                      <div className="dropdown-container">
+                        {item.dropDownOptions.map((d) => {
+                          return (
+                            <Link to={d.path}>
+                              <li>{d.title}</li>
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    </React.Fragment>
+                  ) : (
+                    <Link
+                      to={item.path}
+                      className={selectedTab === item.title ? "selected" : ""}
+                    >
+                      <li>{item.title}</li>
+                    </Link>
+                  );
                 })}
-                <Link to="/">
-                  <li>Home</li>
-                </Link>
-                <Link to="/">
-                  <li>Contact</li>
-                </Link>
-                <Link to="/">
-                  <li>About</li>
-                </Link>
-                <Link
-                  to="/"
-                  className="dropdown-btn"
-                  onClick={this.toggleDropdown}
-                >
-                  Dropdown
-                  <FaAngleDown />
-                </Link>
-                <div className="dropdown-container">
-                  <Link to="/">
-                    <li>Dropdown1</li>
-                  </Link>
-                  <Link to="/">
-                    <li>Dropdown2</li>
-                  </Link>
-                  <Link to="/">
-                    <li>Dropdown3</li>
-                  </Link>
-                </div>
-                <Link to="/">
-                  <li>About2</li>
-                </Link>
-                <Link to="/">
-                  <li>About</li>
-                </Link>
               </ul>
             </div>
           ) : null}

@@ -41,26 +41,21 @@ export const NavigationItems = {
         title: Strings.navigationItems.title.mainPage,
         path: Strings.navigationItems.path.mainPage,
         moveToSidebarInSmallScreen: true,
-        moveToSidebarWhenLoggedIn : true,
       },
       {
         title: Strings.navigationItems.title.about,
         path: Strings.navigationItems.path.about,
         moveToSidebarInSmallScreen: true,
-        moveToSidebarWhenLoggedIn : true,
       },
       {
         title: Strings.navigationItems.title.help,
         path: Strings.navigationItems.path.help,
         moveToSidebarInSmallScreen: true,
-        moveToSidebarWhenLoggedIn : true,
       },
       {
         title: Strings.navigationItems.title.loginSignup,
         path: Strings.navigationItems.path.loginSignup,
         moveToSidebarInSmallScreen: false,
-        moveToSidebarWhenLoggedIn : false,
-     //   style : {color : 'red', alignSelf: 'flexEnd'},
       },
     ],
     loggedIn: [
@@ -74,12 +69,24 @@ export const NavigationItems = {
   sidebar: {
     loggedIn: [
       {
+        title: Strings.navigationItems.title.mainPage,
+        path: Strings.navigationItems.path.mainPage,
+      },
+      {
+        title: Strings.navigationItems.title.about,
+        path: Strings.navigationItems.path.about,
+      },
+      {
+        title: Strings.navigationItems.title.help,
+        path: Strings.navigationItems.path.help,
+      },
+      {
         title: Strings.navigationItems.title.dashboard,
         path: Strings.navigationItems.path.dashboard,
       },
       {
         title: Strings.navigationItems.title.myEvents,
-        path: Strings.navigationItems.path.myEvents,
+       // path: Strings.navigationItems.path.myEvents,
         dropDownOptions: [
           {
             title: Strings.navigationItems.title.createEvent,
@@ -87,7 +94,7 @@ export const NavigationItems = {
           },
           {
             title: Strings.navigationItems.title.currentEvents,
-            paht: Strings.navigationItems.path.currentEvents,
+            path: Strings.navigationItems.path.currentEvents,
           },
           {
             title: Strings.navigationItems.title.completedEvents,

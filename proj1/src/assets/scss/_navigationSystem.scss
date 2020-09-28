@@ -57,6 +57,7 @@
       padding-top: 5px;
       color: $sidebarLinkColor;
       text-decoration: none;
+      width: 100%;
       &:hover {
         color: $sidebarLinkHover;
       }
@@ -92,6 +93,11 @@
     .open-dropdown {
       max-height: 500px;
       transform: scaleY(1);
+    }
+    .selected {
+      border-right: 5px solid rgb(66, 170, 173);
+      background-color: $selectedSideTabBgColor;
+     // color: red;
     }
   }
 }

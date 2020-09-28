@@ -4,6 +4,7 @@ $cardShadow: #595959;
 
 //navigation:
 $sidebarWidth: 25vw;
+// $tabsWidth : 100vw - $sidebar
 $topnavBgColor: #e6cdcd;
 $topnavLinkColor: #000;
 $topnavLinkHover : rgb(143, 132, 132);
@@ -12,6 +13,7 @@ $sidebarDropdownBgColor : rgb(104, 100, 100);
 $sidebarLinkColor : #ccc;
 $sidebarLinkHover : #fff;
 $sidebarToggleTime: 0.3s;
+$selectedSideTabBgColor: rgb(29, 26, 26);
 
 
 $primary : rgb(153, 189, 146);
