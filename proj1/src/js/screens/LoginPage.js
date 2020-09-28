@@ -2,7 +2,7 @@ import React from "react";
 import { Card, Form, Button } from "react-bootstrap";
 import { Strings } from "../../utils/strings";
 import { FetchData } from "../../utils/services";
-import { URL } from "../../utils/configs";
+import { GotoPage, URL } from "../../utils/configs";
 import FormComponent from "../components/FormComponent";
 import { Link, withRouter } from "react-router-dom";
 
@@ -45,18 +45,19 @@ class LoginPage extends React.Component {
     } else if (response.status === 200) {
       console.log("logged in successfully, response :", response.resolve);
       this.props.setProfile(response.resolve);
-      this.props.history.push({
-        pathname: "/dashboard",
-        
-      });
-      //inja badan piade sazi mishe va varede account mishe.
+
+      GotoPage(Strings.navigationItems.path.dashboard, this);
     } else if (response.status === 201) {
-      this.props.history.push({
-        pathname: "/alert",
-        state: {
-          title: Strings.alerts.confirmationTitle,
-          text: Strings.alerts.loginUserNotConfirmed,
-        },
+      // this.props.history.push({
+      //   pathname: "/alert",
+      //   state: {
+      //     title: Strings.alerts.confirmationTitle,
+      //     text: Strings.alerts.loginUserNotConfirmed,
+      //   },
+      // });
+      GotoPage(Strings.notNavigationalPaths.alert, this, {
+        title: Strings.alerts.confirmationTitle,
+        text: Strings.alerts.loginUserNotConfirmed,
       });
     } else if (response.status === 403) {
       this.setState({ errorMessage: Strings.login.wrongUserOrPassError });

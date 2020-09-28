@@ -109,3 +109,12 @@ export const NavigationItems = {
     ],
   },
 };
+
+
+
+export const GotoPage = (pathname , thisComponent , states) => {
+  thisComponent.props.history.push({
+    pathname: pathname,
+    state:states,
+  });
+}

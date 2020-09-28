@@ -2,7 +2,7 @@ import React from "react";
 import { Card, Form, Button } from "react-bootstrap";
 import { Strings } from "../../utils/strings";
 import { PutData } from "../../utils/services";
-import { URL } from "../../utils/configs";
+import { GotoPage, URL } from "../../utils/configs";
 import FormComponent from "../components/FormComponent";
 import { Link, withRouter } from "react-router-dom";
 
@@ -61,12 +61,16 @@ class SignupPage extends React.Component {
         errorMessage: Strings.form.connectionError,
       });
     } else if (response.status === 200) {
-      this.props.history.push({
-        pathname: "/alert",
-        state: {
-          title: Strings.alerts.confirmationTitle,
-          text: Strings.alerts.signupNewUserConfirmation,
-        },
+      // this.props.history.push({
+      //   pathname: "/alert",
+      //   state: {
+      //     title: Strings.alerts.confirmationTitle,
+      //     text: Strings.alerts.signupNewUserConfirmation,
+      //   },
+      // });
+      GotoPage(Strings.notNavigationalPaths.alert, this, {
+        title: Strings.alerts.confirmationTitle,
+        text: Strings.alerts.signupNewUserConfirmation,
       });
     } else if (response.status === 409) {
       this.setState({ errorMessage: Strings.signup.duplicatedEmailError });

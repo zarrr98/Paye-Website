@@ -3,6 +3,7 @@ import { StrorageGetItem } from "../../utils/configs";
 import { Strings } from "../../utils/strings";
 import NavigationSystem from "../components/NavigationSystem";
 import Tabs from "../components/Tabs";
+import AddButton from "../components/AddButton";
 
 export default class Dashboard extends React.Component {
   myEvents = [
@@ -25,8 +26,11 @@ export default class Dashboard extends React.Component {
     console.log("profile in dashboard : ", profile);
     return (
       <NavigationSystem selectedTab={Strings.navigationItems.title.dashboard}>
-        <p>ایونت های من</p>
-        <Tabs tabData={this.myEvents} />
+        <div className="relative-pos">
+          <p>ایونت های من</p>
+          <Tabs tabData={this.myEvents} />
+          <AddButton tooltipText = {Strings.tooltip.createEvent}/>
+        </div>
       </NavigationSystem>
     );
   }

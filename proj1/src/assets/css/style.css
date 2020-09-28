@@ -11073,6 +11073,35 @@ a.text-dark:hover, a.text-dark:focus {
   display: block;
 }
 
+.add-circular-btn {
+  height: 10%;
+  width: 10%;
+  color: crimson;
+  position: fixed;
+  left: 15px;
+  bottom: 15px;
+  z-index: 1;
+  cursor: pointer;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+@media screen and (max-width: 600px) {
+  .add-circular-btn {
+    height: 15vw;
+    width: 15vw;
+    color: yellow;
+  }
+}
+
+@media screen and (max-width: 240px) {
+  .add-circular-btn {
+    height: 30vw;
+    width: 30vw;
+    color: green;
+  }
+}
+
 body {
   direction: rtl;
 }

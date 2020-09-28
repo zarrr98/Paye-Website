@@ -48,10 +48,10 @@ const Strings = {
       profile: "پروفایل",
       dashboard: "داشبورد",
       myEvents: "ایونت های من",
-      createEvent: 'ایجاد ایونت',
+      createEvent: "ایجاد ایونت",
       currentEvents: "ایونت های جاری",
-      completedEvents: 'ایونت های به پایان رسیده',
-      othersEvents: 'ایونت های سایرین',
+      completedEvents: "ایونت های به پایان رسیده",
+      othersEvents: "ایونت های سایرین",
     },
     path: {
       mainPage: "/",
@@ -61,11 +61,18 @@ const Strings = {
       profile: "/profile",
       dashboard: "/dashboard",
       //myEvents : '/',
-      createEvent: '/createEvent',
-      currentEvents: '/currentEvents',
-      completedEvents: '/completedEvents',
-      othersEvents: '/events',
+      createEvent: "/createEvent",
+      currentEvents: "/currentEvents",
+      completedEvents: "/completedEvents",
+      othersEvents: "/events",
     },
+  },
+ notNavigationalPaths : {
+  alert : '/alert',
+ },
+  tooltip: {
+    default: "اضافه کردن",
+    createEvent: "ایجاد ایونت",
   },
 };
 
