@@ -5,12 +5,17 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const User = require("../../models/user");
+const Event = require("../../models/event");
+
 const Strings = require("../../utils/strings");
+
 const checkAuth = require("../middleware/check-auth");
+const { upload } = require("../middleware/upload-file");
+
 const confirmEmailToken = require("../middleware/confirm-email");
 const transporter = require("../../email/send");
 const sendEmail = require("../../email/templates");
-const { upload } = require("../middleware/upload-file");
+
 const { JWT_KEY } = require("../../utils/configs");
 const { Client_URL } = require("../../utils/publicConfigs");
 
@@ -239,5 +244,37 @@ router.get("/login/:email/:pass", (req, res, next) => {
       return res.status(500).json({ error: err, status: 500 });
     });
 });
+
+//create event
+router.put(
+  "/createevent",
+  checkAuth,
+  upload.single("picture"),
+  (req, res, next) => {
+    const event = new Event({
+      _id: mongoose.Types.ObjectId(),
+      owner: req.decodedJWT.userId,
+      capacity: req.body.capacity,
+      start_date: req.body.start_date,
+      picture: req.file.path,
+    });
+    console.log("event is :", event);
+    event
+      .save()
+      .then((resolve) =>
+        res.status(200).json({
+          message: "Event was created successfully.",
+          status: 200,
+          resolve,
+        })
+      )
+      .catch((err) => {
+        return res.status(500).json({
+          error: err,
+          status: 500,
+        });
+      });
+  }
+);
 
 module.exports = router;

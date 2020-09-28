@@ -16,7 +16,7 @@ mongoose.connect(uri,
     )
 mongoose.Promise = global.Promise    
 app.use(cors());
-// app.use('/translationfiles',express.static("translationfiles"))  
+app.use('/server/eventpics',express.static("server/eventpics"))  
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use('/apis', routes)
