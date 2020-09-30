@@ -3,19 +3,21 @@ import { Strings } from "../../utils/strings";
 // import { URL } from "../utils/configs";
 import { ButtonGroup, Button, Form, Spinner } from "react-bootstrap";
 import { Link, withRouter } from "react-router-dom";
+import { DatePicker } from "jalali-react-datepicker";
+import moment from "jalali-moment";
 //import { PutData } from "../utils/services";
 
 class FormComponent extends React.Component {
   state = {
-    fields : this.props.fields,
+    fields: this.props.fields,
     values: {},
     error: false,
     isLoading: false,
+    dateError: false,
   };
 
-
   setErrorMessage = (name, msg) => {
-    this.state.fields.map(item => {
+    this.state.fields.map((item) => {
       if (item.name === name) {
         item.errorMessage = msg;
       }
@@ -32,13 +34,43 @@ class FormComponent extends React.Component {
     this.props.setErrorMessage("");
     this.setErrorMessage(key, "");
   };
-  
+
+  handleChangeDate = ({ value }, name) => {
+    let { values } = this.state;
+    console.log("value and name in handleChangeDate : ", value, name);
+    let date = new Date(value);
+    let momentString = `${
+      date.getMonth() + 1
+    } ${date.getDate()} ${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
+    console.log("moment string: ", momentString);
+    let mdate = moment(momentString, "M DD YYYY HH:mm").format(
+      "jYYYY/jMM/jD HH:mm"
+    );
+    console.log("moment shode ash: ", mdate, "the type : ", typeof mdate);
+    if (moment(momentString, "M DD YYYY HH:mm").isBefore(moment().add(2, 'day'), "day")) {
+      //it's before now
+      this.setErrorMessage(name, Strings.createEvent.dateBeforeNowError);
+      this.setState({ dateError: true });
+      console.log("error : ", Strings.createEvent.dateBeforeNowError);
+    } else {
+      this.setState({ values: { ...values, [name]: mdate }, dateError: false });
+      this.setErrorMessage(name, "");
+      console.log("okay and saved in values");
+    }
+    // this.setState({ values: { ...values, start_date: mdate } });
+
+    // //compare two moments:
+    // console.log( moment(momentString,"M DD YYYY HH:mm").isBefore(moment('9 26 2020 14:20',"M DD YYYY HH:mm")))
+
+    // //compare a moment with now:
+    // console.log("compare with now : ", moment(momentString,"M DD YYYY HH:mm").isBefore(moment()), " and now is: ", moment().format("M DD YYYY HH:mm"))
+  };
 
   submit = async () => {
     const { values } = this.state;
     console.log("values are : ", values);
     let error = false;
-    let copyFields = this.state.fields
+    let copyFields = this.state.fields;
     copyFields.map((item, i) => {
       if (item.required && !values[item.name]) {
         item.errorMessage = Strings.form.emptyError;
@@ -51,23 +83,26 @@ class FormComponent extends React.Component {
       }
     });
     this.setState({
-      fields : copyFields,
-      error
+      fields: copyFields,
+      error,
     });
     if (!error) {
       this.setState({ isLoading: true });
       await this.props.submitMethod(values);
       this.setState({ isLoading: false });
-     // console.log("data is : ",data)
-     // this.checkResponseStatus(data);
+      // console.log("data is : ",data)
+      // this.checkResponseStatus(data);
     }
   };
 
-
-
   render() {
     return (
-      <Form autoComplete="off">
+      <Form
+        autoComplete="off"
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+      >
         {this.state.fields.map((item, i) => {
           if (item.type === "text") {
             return (
@@ -86,12 +121,28 @@ class FormComponent extends React.Component {
                 ) : null}
               </Form.Group>
             );
+          } else if (item.type === "datePicker") {
+            return (
+              <React.Fragment>
+                <DatePicker
+                  label={item.label}
+                  onClickSubmitButton={({ value }) =>
+                    this.handleChangeDate({ value }, item.name)
+                  }
+                />
+                {this.state.dateError || this.state.error ? (
+                  <Form.Text className="text-danger">
+                    {item.errorMessage}
+                  </Form.Text>
+                ) : null}
+              </React.Fragment>
+            );
           }
         })}
         <Button
           onClick={this.submit}
           disabled={this.state.isLoading ? true : false}
-          className = {"w-100"}
+          className={"w-100"}
         >
           {this.state.isLoading ? (
             <Spinner
@@ -104,7 +155,6 @@ class FormComponent extends React.Component {
           ) : null}
           {this.props.submitButtonText}
         </Button>
-        
       </Form>
     );
   }

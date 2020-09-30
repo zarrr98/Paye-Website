@@ -1,9 +1,5 @@
 
-.centered-container{
-    
-    @include centerElementContainer;
-    padding: 4vh 0;
-}
+
 .form-container{
     text-align: right;
     border: 1px solid $formBorder;

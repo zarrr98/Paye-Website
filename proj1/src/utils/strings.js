@@ -2,10 +2,10 @@ import { createEvent } from "@testing-library/react";
 
 const Strings = {
   form: {
-    invalidEmailError: "ایمیل نامعتبر است",
+    invalidEmailError: "ایمیل نامعتبره",
     register: "ثبت نام",
     login: "ورود",
-    emptyError: "این فیلد نمیتواند خالی باشد",
+    emptyError: "این فیلد نمیتونه خالی باشه",
     connectionError:
       "مشکلی پیش آمده. اتصال خود به اینترنت را چک و دوباره امتحان نمایید",
   },
@@ -74,6 +74,19 @@ const Strings = {
     default: "اضافه کردن",
     createEvent: "ایجاد ایونت",
   },
+  createEvent : {
+    titleLable : 'یه عنوان واسه ایونتی که میخوای بسازی وارد کن',
+    titlePlaceholder : 'عنوان ایونت',
+    startDateLable : 'تاریخ و ساعتی که ایونت ات شروع میشه رو در زیر مشخص کن',
+    capacityLable : 'تعداد نفرهایی که برای این ایونت لازم داری رو در زیر وارد کن',
+    capacityPlaceholder : 'ظرفیت ایونت',
+    capacityUnvalidMessage : 'تعداد افراد باید حداقل دو نفر باشه',
+    pictureLable : "اگه میخوای یه عکس واسه این ایونت آپلود کن تا افراد بیشتری بهش جذب بشن و درخواست بدن",
+    formTitle : 'یک ایونت ایجاد کن',
+    submitButtonText : 'ساخت ایونت',
+    dateBeforeNowError : 'تاریخ انتخاب شده باید حداقل دو روز بعد از امروز باشد',
+
+  }
 };
 
 export { Strings };

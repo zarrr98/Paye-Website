@@ -162,6 +162,7 @@ class NavigationSystem extends React.Component {
                       <Link
                         className="dropdown-btn"
                         onClick={this.toggleDropdown}
+                      //  className={selectedTab === item.title ? "selected" : ""}
                       >
                         {item.title}
                         <FaAngleDown />
@@ -169,7 +170,12 @@ class NavigationSystem extends React.Component {
                       <div className="dropdown-container">
                         {item.dropDownOptions.map((d) => {
                           return (
-                            <Link to={d.path}>
+                            <Link
+                              to={d.path}
+                              // className={
+                              //   selectedTab === d.title ? "selected" : ""
+                              // }
+                            >
                               <li>{d.title}</li>
                             </Link>
                           );

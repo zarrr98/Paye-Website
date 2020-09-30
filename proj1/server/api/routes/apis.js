@@ -253,6 +253,7 @@ router.put(
   (req, res, next) => {
     const event = new Event({
       _id: mongoose.Types.ObjectId(),
+      title: req.body.title,
       owner: req.decodedJWT.userId,
       capacity: req.body.capacity,
       start_date: req.body.start_date,

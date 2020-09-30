@@ -8,6 +8,7 @@ import LoginPage from "./js/screens/LoginPage";
 import AlertPage from "./js/screens/AlertPage";
 import Dashboard from './js/screens/Dashboard';
 import MainPage from './js/screens/MainPage'; 
+import CreateEvent from './js/screens/CreateEvent';
 import NavigationSystem from './js/components/NavigationSystem';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Strings } from "./utils/strings";
@@ -41,6 +42,9 @@ class App extends React.Component {
           </Route>
           <Route path={"/dashboard"}>
             <Dashboard/>
+          </Route>
+          <Route path={Strings.navigationItems.path.createEvent}>
+            <CreateEvent/>
           </Route>
         </Switch>
       </Router>

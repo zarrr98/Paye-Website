@@ -118,3 +118,5 @@ export const GotoPage = (pathname , thisComponent , states) => {
     state:states,
   });
 }
+
+export const ImageAcceptedFileTypes = `image/gif, image/jpeg, image/png, image/bmp`

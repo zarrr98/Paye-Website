@@ -11,3 +11,9 @@
 .margin-top {
     margin-top: 20px;
 }
+
+.centered-container{
+    
+  @include centerElementContainer;
+  padding: 4vh 0;
+}

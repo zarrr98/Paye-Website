@@ -10826,7 +10826,7 @@ a.text-dark:hover, a.text-dark:focus {
   padding: 4vh 0;
 }
 
-.form-container {
+.form-container, .event-form-container {
   text-align: right;
   border: 1px solid #ccc;
   -webkit-box-shadow: 2px 3px 10px #595959;
@@ -10834,19 +10834,19 @@ a.text-dark:hover, a.text-dark:focus {
   width: 40vw;
 }
 
-.form-container .title {
+.form-container .title, .event-form-container .title {
   text-align: center;
   background-color: #e6e6e6;
   padding: 12px;
   border-bottom: 1px solid #ccc;
 }
 
-.form-container input {
+.form-container input, .event-form-container input {
   background-color: #e6e6e6;
 }
 
 @media screen and (max-width: 768px) {
-  .form-container {
+  .form-container, .event-form-container {
     width: 100vw;
   }
 }
@@ -11100,6 +11100,10 @@ a.text-dark:hover, a.text-dark:focus {
     width: 30vw;
     color: green;
   }
+}
+
+.event-form-container {
+  width: 60vw;
 }
 
 body {
