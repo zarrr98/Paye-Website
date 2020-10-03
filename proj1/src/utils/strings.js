@@ -98,6 +98,9 @@ const Strings = {
     dateBeforeNowError: "تاریخ انتخاب شده باید حداقل دو روز بعد از امروز باشد",
     successfullyCreatedMessage :  "ایونت شما با موفقیت ایجاد شد",
   },
+  empty : {
+    default : 'اطلاعاتی برای نمایش نیست',
+  }
 };
 
 export { Strings };

@@ -9,7 +9,9 @@ import { FetchData } from "../../utils/services";
 export default class Dashboard extends React.Component {
   state = {
     isLoading: false,
-    myEvents: [],
+    myEvents: [
+      { tabName: "ایجاد شده", data: [] },
+      { tabName: "درخواست شده", data: [] },],
   };
   myEvents = [
     {
@@ -26,9 +28,9 @@ export default class Dashboard extends React.Component {
       ],
     },
   ];
-  divideDataIntoTabs = (data) => {
+  divideDataIntoTabs = (response) => {
     let profile = StrorageGetItem(Strings.storage.profile, true);
-
+    let data = response ? response.resolve : [];
     let createdEvents = data.filter((d) => d.owner === profile._id);
     let requestedEvents = data.filter((d) => d.owner !== profile._id);
 
@@ -50,7 +52,7 @@ export default class Dashboard extends React.Component {
     );
 
     console.log("the data : ", data);
-    this.divideDataIntoTabs(data.resolve);
+    this.divideDataIntoTabs(data);
     this.setState({ isLoading: false });
   };
   componentDidMount = () => {
