@@ -1,0 +1,23 @@
+.upload-file-container {
+  border: 5px dotted #ccc;
+  padding: 10%;
+  margin: 2% auto;
+}
+
+.upload-btn {
+  border: 1px solid #ccc;
+  padding: 5px;
+  max-width: 50%;
+  margin: 20px auto;
+  cursor: pointer;
+}
+
+.date-picker {
+  // width : 100%;
+  // text-align: right;
+  // border-radius: 0.25rem;
+  // border : 1px solid #ced4da;
+  // height: calc(1.5em + 0.75rem + 2px);
+  @extend .form-control;
+  text-align: right;
+}

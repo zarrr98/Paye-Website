@@ -1,11 +1,16 @@
 import React from "react";
-import { StrorageGetItem } from "../../utils/configs";
+import { StrorageGetItem, URL } from "../../utils/configs";
 import { Strings } from "../../utils/strings";
 import NavigationSystem from "../components/NavigationSystem";
 import Tabs from "../components/Tabs";
 import AddButton from "../components/AddButton";
+import { FetchData } from "../../utils/services";
 
 export default class Dashboard extends React.Component {
+  state = {
+    isLoading: false,
+    myEvents: [],
+  };
   myEvents = [
     {
       tabName: "جاری",
@@ -21,6 +26,36 @@ export default class Dashboard extends React.Component {
       ],
     },
   ];
+  divideDataIntoTabs = (data) => {
+    let profile = StrorageGetItem(Strings.storage.profile, true);
+
+    let createdEvents = data.filter((d) => d.owner === profile._id);
+    let requestedEvents = data.filter((d) => d.owner !== profile._id);
+
+    this.setState({
+      myEvents: [
+        { tabName: "ایجاد شده", data: createdEvents },
+        { tabName: "درخواست شده", data: requestedEvents },
+      ],
+    });
+  };
+  getEvents = async () => {
+    let profile = StrorageGetItem(Strings.storage.profile, true);
+    this.setState({ isLoading: true });
+    let data = await FetchData(
+      `${URL.protocol}://${URL.baseURL}:${URL.port}/${
+        URL.path
+      }/myevents/${true}/${true}`,
+      profile.token
+    );
+
+    console.log("the data : ", data);
+    this.divideDataIntoTabs(data.resolve);
+    this.setState({ isLoading: false });
+  };
+  componentDidMount = () => {
+    this.getEvents();
+  };
   render() {
     let profile = StrorageGetItem(Strings.storage.profile, true);
     console.log("profile in dashboard : ", profile);
@@ -28,8 +63,8 @@ export default class Dashboard extends React.Component {
       <NavigationSystem selectedTab={Strings.navigationItems.title.dashboard}>
         <div className="relative-pos">
           <p>ایونت های من</p>
-          <Tabs tabData={this.myEvents} />
-          <AddButton tooltipText = {Strings.tooltip.createEvent}/>
+          <Tabs tabData={this.state.myEvents} isLoading={this.state.isLoading}/>
+          <AddButton tooltipText={Strings.tooltip.createEvent} />
         </div>
       </NavigationSystem>
     );

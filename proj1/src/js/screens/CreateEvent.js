@@ -4,9 +4,11 @@ import { DatePicker } from "jalali-react-datepicker";
 import moment from "jalali-moment";
 import { Strings } from "../../utils/strings";
 import { Button } from "react-bootstrap";
-import { PutData } from "../../utils/services";
+import { SendDataAndFile } from "../../utils/services";
 import {
+  GotoPage,
   ImageAcceptedFileTypes,
+  StorageRemoveItem,
   StrorageGetItem,
   URL,
 } from "../../utils/configs";
@@ -16,6 +18,7 @@ import FormComponent from "../components/FormComponent";
 export default class CreateEvent extends React.Component {
   state = {
     errorMessage: "",
+    successMessage: "",
   };
   fields = [
     {
@@ -65,44 +68,36 @@ export default class CreateEvent extends React.Component {
   };
 
   checkResponseStatus = (response) => {
-    // if (!response) {
-    //   this.setState({
-    //     errorMessage: Strings.form.connectionError,
-    //   });
-    // } else if (response.status === 200) {
-    //   console.log("logged in successfully, response :", response.resolve);
-    //   this.props.setProfile(response.resolve);
-    //   GotoPage(Strings.navigationItems.path.dashboard, this);
-    // } else if (response.status === 201) {
-    //   // this.props.history.push({
-    //   //   pathname: "/alert",
-    //   //   state: {
-    //   //     title: Strings.alerts.confirmationTitle,
-    //   //     text: Strings.alerts.loginUserNotConfirmed,
-    //   //   },
-    //   // });
-    //   GotoPage(Strings.notNavigationalPaths.alert, this, {
-    //     title: Strings.alerts.confirmationTitle,
-    //     text: Strings.alerts.loginUserNotConfirmed,
-    //   });
-    // } else if (response.status === 403) {
-    //   this.setState({ errorMessage: Strings.login.wrongUserOrPassError });
-    // } else if (response.status === 500) {
-    //   this.setState({ errorMessage: Strings.form.connectionError });
-    // } else {
-    //   this.setState({ errorMessage: Strings.form.connectionError });
-    // }
+    if (!response) {
+      this.setState({
+        errorMessage: Strings.form.connectionError,
+      });
+    } else if (response.status === 200) {
+      this.setState({
+        successMessage: Strings.createEvent.successfullyCreatedMessage,
+      });
+    } else if (response.status === 413) {
+      //token has been expired
+      StorageRemoveItem(Strings.storage.profile);
+      GotoPage(Strings.navigationItems.path.mainPage, this);
+    } else if (response.status === 500) {
+      this.setState({ errorMessage: Strings.form.connectionError });
+    } else {
+      this.setState({ errorMessage: Strings.form.connectionError });
+    }
   };
   submitMethod = async (values) => {
     console.log("values in submit method : ", values);
+    this.setState({errorMessage : "", successMessage: ""});
 
     let profile = StrorageGetItem(Strings.storage.profile, true);
-    let data = await PutData(
+    let data = await SendDataAndFile(
       `${URL.protocol}://${URL.baseURL}:${URL.port}/${URL.path}/createevent`,
       values,
-      profile.token
+      profile.token,
+      "PUT"
     );
-    console.log("data : ", data);
+    console.log("****data : ", data);
     this.checkResponseStatus(data);
   };
   changeDate = ({ value }) => {
@@ -125,23 +120,6 @@ export default class CreateEvent extends React.Component {
     // console.log("compare with now : ", moment(momentString,"M DD YYYY HH:mm").isBefore(moment()), " and now is: ", moment().format("M DD YYYY HH:mm"))
   };
 
-  submit = async () => {
-    let { values } = this.state;
-    let profile = StrorageGetItem(Strings.storage.profile, true);
-    console.log(
-      "values in states : ",
-      this.state.values,
-      " and profile is :",
-      profile
-    );
-    let sendData = { ...values, capacity: 10 };
-    let data = await PutData(
-      `${URL.protocol}://${URL.baseURL}:${URL.port}/${URL.path}/createevent`,
-      sendData,
-      profile.token
-    );
-    console.log("data : ", data);
-  };
   render() {
     return (
       <NavigationSystem selectedTab={Strings.navigationItems.title.myEvents}>
@@ -161,7 +139,10 @@ export default class CreateEvent extends React.Component {
                 submitButtonText={Strings.createEvent.submitButtonText}
               />
               <p className="margin-top text-center text-danger">
-                <p className="text-danger">{this.state.errorMessage}</p>
+                {this.state.errorMessage}
+              </p>
+              <p className="margin-top text-center text-success">
+                {this.state.successMessage}
               </p>
             </Card.Body>
           </Card>

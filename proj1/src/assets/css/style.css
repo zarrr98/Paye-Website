@@ -2179,7 +2179,7 @@ pre code {
   border: 0;
 }
 
-.form-control {
+.form-control, .date-picker {
   display: block;
   width: 100%;
   height: calc(1.5em + 0.75rem + 2px);
@@ -2199,23 +2199,23 @@ pre code {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .form-control {
+  .form-control, .date-picker {
     -webkit-transition: none;
     transition: none;
   }
 }
 
-.form-control::-ms-expand {
+.form-control::-ms-expand, .date-picker::-ms-expand {
   background-color: transparent;
   border: 0;
 }
 
-.form-control:-moz-focusring {
+.form-control:-moz-focusring, .date-picker:-moz-focusring {
   color: transparent;
   text-shadow: 0 0 0 #495057;
 }
 
-.form-control:focus {
+.form-control:focus, .date-picker:focus {
   color: #495057;
   background-color: #fff;
   border-color: #80bdff;
@@ -2224,41 +2224,44 @@ pre code {
           box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
-.form-control::-webkit-input-placeholder {
+.form-control::-webkit-input-placeholder, .date-picker::-webkit-input-placeholder {
   color: #6c757d;
   opacity: 1;
 }
 
-.form-control:-ms-input-placeholder {
+.form-control:-ms-input-placeholder, .date-picker:-ms-input-placeholder {
   color: #6c757d;
   opacity: 1;
 }
 
-.form-control::-ms-input-placeholder {
+.form-control::-ms-input-placeholder, .date-picker::-ms-input-placeholder {
   color: #6c757d;
   opacity: 1;
 }
 
-.form-control::placeholder {
+.form-control::placeholder, .date-picker::placeholder {
   color: #6c757d;
   opacity: 1;
 }
 
-.form-control:disabled, .form-control[readonly] {
+.form-control:disabled, .date-picker:disabled, .form-control[readonly], .date-picker[readonly] {
   background-color: #e9ecef;
   opacity: 1;
 }
 
-input[type="date"].form-control,
+input[type="date"].form-control, input.date-picker[type="date"],
 input[type="time"].form-control,
+input.date-picker[type="time"],
 input[type="datetime-local"].form-control,
-input[type="month"].form-control {
+input.date-picker[type="datetime-local"],
+input[type="month"].form-control,
+input.date-picker[type="month"] {
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
 }
 
-select.form-control:focus::-ms-value {
+select.form-control:focus::-ms-value, select.date-picker:focus::-ms-value {
   color: #495057;
   background-color: #fff;
 }
@@ -2325,11 +2328,11 @@ select.form-control:focus::-ms-value {
   border-radius: 0.3rem;
 }
 
-select.form-control[size], select.form-control[multiple] {
+select.form-control[size], select.date-picker[size], select.form-control[multiple], select.date-picker[multiple] {
   height: auto;
 }
 
-textarea.form-control {
+textarea.form-control, textarea.date-picker {
   height: auto;
 }
 
@@ -2428,7 +2431,7 @@ textarea.form-control {
   display: block;
 }
 
-.was-validated .form-control:valid, .form-control.is-valid {
+.was-validated .form-control:valid, .was-validated .date-picker:valid, .form-control.is-valid, .is-valid.date-picker {
   border-color: #28a745;
   padding-right: calc(1.5em + 0.75rem);
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3e%3cpath fill='%2328a745' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
@@ -2437,13 +2440,13 @@ textarea.form-control {
   background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
 }
 
-.was-validated .form-control:valid:focus, .form-control.is-valid:focus {
+.was-validated .form-control:valid:focus, .was-validated .date-picker:valid:focus, .form-control.is-valid:focus, .is-valid.date-picker:focus {
   border-color: #28a745;
   -webkit-box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
           box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
 }
 
-.was-validated textarea.form-control:valid, textarea.form-control.is-valid {
+.was-validated textarea.form-control:valid, .was-validated textarea.date-picker:valid, textarea.form-control.is-valid, textarea.is-valid.date-picker {
   padding-right: calc(1.5em + 0.75rem);
   background-position: top calc(0.375em + 0.1875rem) right calc(0.375em + 0.1875rem);
 }
@@ -2533,7 +2536,7 @@ textarea.form-control {
   display: block;
 }
 
-.was-validated .form-control:invalid, .form-control.is-invalid {
+.was-validated .form-control:invalid, .was-validated .date-picker:invalid, .form-control.is-invalid, .is-invalid.date-picker {
   border-color: #dc3545;
   padding-right: calc(1.5em + 0.75rem);
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23dc3545' viewBox='0 0 12 12'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
@@ -2542,13 +2545,13 @@ textarea.form-control {
   background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
 }
 
-.was-validated .form-control:invalid:focus, .form-control.is-invalid:focus {
+.was-validated .form-control:invalid:focus, .was-validated .date-picker:invalid:focus, .form-control.is-invalid:focus, .is-invalid.date-picker:focus {
   border-color: #dc3545;
   -webkit-box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
           box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
 }
 
-.was-validated textarea.form-control:invalid, textarea.form-control.is-invalid {
+.was-validated textarea.form-control:invalid, .was-validated textarea.date-picker:invalid, textarea.form-control.is-invalid, textarea.is-invalid.date-picker {
   padding-right: calc(1.5em + 0.75rem);
   background-position: top calc(0.375em + 0.1875rem) right calc(0.375em + 0.1875rem);
 }
@@ -2653,7 +2656,7 @@ textarea.form-control {
             align-items: center;
     margin-bottom: 0;
   }
-  .form-inline .form-control {
+  .form-inline .form-control, .form-inline .date-picker {
     display: inline-block;
     width: auto;
     vertical-align: middle;
@@ -3816,7 +3819,7 @@ input[type="button"].btn-block {
   width: 100%;
 }
 
-.input-group > .form-control,
+.input-group > .form-control, .input-group > .date-picker,
 .input-group > .form-control-plaintext,
 .input-group > .custom-select,
 .input-group > .custom-file {
@@ -3829,22 +3832,27 @@ input[type="button"].btn-block {
   margin-bottom: 0;
 }
 
-.input-group > .form-control + .form-control,
+.input-group > .form-control + .form-control, .input-group > .date-picker + .form-control, .input-group > .form-control + .date-picker, .input-group > .date-picker + .date-picker,
 .input-group > .form-control + .custom-select,
+.input-group > .date-picker + .custom-select,
 .input-group > .form-control + .custom-file,
+.input-group > .date-picker + .custom-file,
 .input-group > .form-control-plaintext + .form-control,
+.input-group > .form-control-plaintext + .date-picker,
 .input-group > .form-control-plaintext + .custom-select,
 .input-group > .form-control-plaintext + .custom-file,
 .input-group > .custom-select + .form-control,
+.input-group > .custom-select + .date-picker,
 .input-group > .custom-select + .custom-select,
 .input-group > .custom-select + .custom-file,
 .input-group > .custom-file + .form-control,
+.input-group > .custom-file + .date-picker,
 .input-group > .custom-file + .custom-select,
 .input-group > .custom-file + .custom-file {
   margin-left: -1px;
 }
 
-.input-group > .form-control:focus,
+.input-group > .form-control:focus, .input-group > .date-picker:focus,
 .input-group > .custom-select:focus,
 .input-group > .custom-file .custom-file-input:focus ~ .custom-file-label {
   z-index: 3;
@@ -3854,13 +3862,13 @@ input[type="button"].btn-block {
   z-index: 4;
 }
 
-.input-group > .form-control:not(:last-child),
+.input-group > .form-control:not(:last-child), .input-group > .date-picker:not(:last-child),
 .input-group > .custom-select:not(:last-child) {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-.input-group > .form-control:not(:first-child),
+.input-group > .form-control:not(:first-child), .input-group > .date-picker:not(:first-child),
 .input-group > .custom-select:not(:first-child) {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
@@ -3948,12 +3956,12 @@ input[type="button"].btn-block {
   margin-top: 0;
 }
 
-.input-group-lg > .form-control:not(textarea),
+.input-group-lg > .form-control:not(textarea), .input-group-lg > .date-picker:not(textarea),
 .input-group-lg > .custom-select {
   height: calc(1.5em + 1rem + 2px);
 }
 
-.input-group-lg > .form-control,
+.input-group-lg > .form-control, .input-group-lg > .date-picker,
 .input-group-lg > .custom-select,
 .input-group-lg > .input-group-prepend > .input-group-text,
 .input-group-lg > .input-group-append > .input-group-text,
@@ -3965,12 +3973,12 @@ input[type="button"].btn-block {
   border-radius: 0.3rem;
 }
 
-.input-group-sm > .form-control:not(textarea),
+.input-group-sm > .form-control:not(textarea), .input-group-sm > .date-picker:not(textarea),
 .input-group-sm > .custom-select {
   height: calc(1.5em + 0.5rem + 2px);
 }
 
-.input-group-sm > .form-control,
+.input-group-sm > .form-control, .input-group-sm > .date-picker,
 .input-group-sm > .custom-select,
 .input-group-sm > .input-group-prepend > .input-group-text,
 .input-group-sm > .input-group-append > .input-group-text,
@@ -11104,6 +11112,30 @@ a.text-dark:hover, a.text-dark:focus {
 
 .event-form-container {
   width: 60vw;
+}
+
+@media screen and (max-width: 768px) {
+  .event-form-container {
+    width: 100vw;
+  }
+}
+
+.upload-file-container {
+  border: 5px dotted #ccc;
+  padding: 10%;
+  margin: 2% auto;
+}
+
+.upload-btn {
+  border: 1px solid #ccc;
+  padding: 5px;
+  max-width: 50%;
+  margin: 20px auto;
+  cursor: pointer;
+}
+
+.date-picker {
+  text-align: right;
 }
 
 body {

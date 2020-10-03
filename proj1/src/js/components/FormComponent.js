@@ -5,6 +5,8 @@ import { ButtonGroup, Button, Form, Spinner } from "react-bootstrap";
 import { Link, withRouter } from "react-router-dom";
 import { DatePicker } from "jalali-react-datepicker";
 import moment from "jalali-moment";
+import Dropzone from "react-dropzone";
+import { FaCloudUploadAlt } from "react-icons/fa";
 //import { PutData } from "../utils/services";
 
 class FormComponent extends React.Component {
@@ -14,6 +16,7 @@ class FormComponent extends React.Component {
     error: false,
     isLoading: false,
     dateError: false,
+    acceptedFiles: {}
   };
 
   setErrorMessage = (name, msg) => {
@@ -47,7 +50,12 @@ class FormComponent extends React.Component {
       "jYYYY/jMM/jD HH:mm"
     );
     console.log("moment shode ash: ", mdate, "the type : ", typeof mdate);
-    if (moment(momentString, "M DD YYYY HH:mm").isBefore(moment().add(2, 'day'), "day")) {
+    if (
+      moment(momentString, "M DD YYYY HH:mm").isBefore(
+        moment().add(2, "day"),
+        "day"
+      )
+    ) {
       //it's before now
       this.setErrorMessage(name, Strings.createEvent.dateBeforeNowError);
       this.setState({ dateError: true });
@@ -64,6 +72,25 @@ class FormComponent extends React.Component {
 
     // //compare a moment with now:
     // console.log("compare with now : ", moment(momentString,"M DD YYYY HH:mm").isBefore(moment()), " and now is: ", moment().format("M DD YYYY HH:mm"))
+  };
+
+  onDrop = (acceptedFiless, key) => {
+    let { values, acceptedFiles } = this.state;
+    acceptedFiless.length > 0 &&
+      this.setState({
+        values: { ...values, [key]: acceptedFiless[0] },
+        acceptedFiles: { ...acceptedFiles, [key]: acceptedFiless },
+        error: false,
+        // errorMessage: "",
+      });
+
+    acceptedFiless.length > 0 && this.setErrorMessage(key, "");
+    acceptedFiless.length > 0 && this.props.setErrorMessage("");
+  };
+
+  onDropRejected = (rejected) => {
+    console.log("$$ onDropRejected got called => ", rejected);
+    alert(Strings.form.onlyPicturesAlert);
   };
 
   submit = async () => {
@@ -129,6 +156,7 @@ class FormComponent extends React.Component {
                   onClickSubmitButton={({ value }) =>
                     this.handleChangeDate({ value }, item.name)
                   }
+                  className = "date-picker"
                 />
                 {this.state.dateError || this.state.error ? (
                   <Form.Text className="text-danger">
@@ -136,6 +164,69 @@ class FormComponent extends React.Component {
                   </Form.Text>
                 ) : null}
               </React.Fragment>
+            );
+          }
+          if (item.type === "upload-file") {
+            return (
+              <div>
+                {item.label ? <Form.Label>{item.label}</Form.Label> : null}
+                <Dropzone
+                  onDrop={(acceptedFiles) =>
+                    this.onDrop(acceptedFiles, item.name)
+                  }
+                  onDropRejected={(rejected) =>
+                    this.onDropRejected(rejected, item.name)
+                  }
+                  accept={item.accept}
+                  multiple={false}
+                >
+                  {({
+                    getRootProps,
+                    getInputProps,
+                    isDragActive,
+                    isDragReject,
+                    rejectedFiles,
+                  }) => (
+                    <div
+                      {...getRootProps()}
+                      className="text-center upload-file-container "
+                    >
+                      <input {...getInputProps()} />
+                      <p className="gray-text">
+                        {!isDragActive && Strings.form.uploadFileExplanation}
+                        {isDragActive &&
+                          !isDragReject &&
+                          Strings.form.WhileDropMessage}
+                      </p>
+                      <p className="text-danger mt-2">
+                        {isDragReject &&
+                          // this.setState({
+                          //   wrongTypeFileDragged: true,
+                          // }) &&
+                          Strings.form.uploadFileTypeError}
+                      </p>
+                      {/* {rejectedFiles && rejectedFiles.length>0 && this.handleRejectedFiles(rejectedFiles)} */}
+                      <div className="upload-btn">
+                        <FaCloudUploadAlt className="refresh-icon " />{" "}
+                        {this.state.values[item.name]
+                          ? Strings.form.uploadFileAgain
+                          : Strings.form.uploadFile}
+                      </div>
+                      <ul className="list-group mt-2 margin-top">
+                        {this.state.acceptedFiles[item.name] &&
+                          this.state.acceptedFiles[item.name].map((acceptedFile) => (
+                            <li className="list-group-item list-group-item-success">
+                              {acceptedFile.name}
+                            </li>
+                          ))}
+                      </ul>
+                    </div>
+                  )}
+                </Dropzone>
+                {this.state.error ? (
+                  <p className="text-danger">{item.errorMessage}</p>
+                ) : null}
+              </div>
             );
           }
         })}

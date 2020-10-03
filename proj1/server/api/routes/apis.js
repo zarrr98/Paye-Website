@@ -257,8 +257,11 @@ router.put(
       owner: req.decodedJWT.userId,
       capacity: req.body.capacity,
       start_date: req.body.start_date,
-      picture: req.file.path,
+      // picture: req.file ? req.file.path : null,
     });
+    if (req.file) {
+      event.picture = req.file.path;
+    }
     console.log("event is :", event);
     event
       .save()
@@ -278,4 +281,36 @@ router.put(
   }
 );
 
+//get the user's events
+router.get("/myevents/:owner/:applicant", checkAuth, (req, res, next) => {
+    let id = req.decodedJWT.userId;
+    let {owner , applicant} = req.params;
+    // owner = Boolean("false");
+    // applicant = Boolean(applicant);
+   // let events = [];
+    let query = {$or : []};
+    console.log("owner and applicant : ", owner, applicant , typeof owner , typeof applicant);
+    if (owner === "true"){
+      query.$or.push({owner : id});
+    }
+    if (applicant === "true"){
+      query.$or.push({applicants : id});
+
+    }
+    console.log("the query is : ",query)
+    Event.find(query)
+      .exec()
+      .then((resolve) => {
+        console.log("success in get my events :" , resolve)
+        res.status(200).json({
+          status: 200,
+          message: "My events returned successfully!",
+          resolve,
+        });
+      })
+      .catch((err) => {
+        return res.status(500).json({ error: err, status: 500 });
+      });
+  
+});
 module.exports = router;
